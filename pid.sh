@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
-function pid() {
-  proc=$("ps aux | grep $1")
-  if [ -z "$2" ] then
-    proc=$("$proc | grep $2")
-  fi
-  echo $("$proc | awk '{print $2}'")
-}
+if [ $# -ne 0 ]; then
+	proc=$(ps aux | grep [n]ode)
+	echo $proc
+	for var in "$@"
+	do
+		echo $var
+		proc=$($proc | grep $var | grep -v grep)
+	done
+	echo $($proc | awk '{print $2}')
+fi
+exit 1
